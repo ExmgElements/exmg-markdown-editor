@@ -27,24 +27,39 @@
         <template>
           <exmg-markdown-editor auto-focus split-view>
             <script type="text/markdown">
-              # Intro
-              Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like `cmd-b` or `ctrl-b`.
+              # Headers
+               
+              # H1
+              ## H2
+              ### H3
+              #### H4
+              ##### H5
+              ###### H6
 
-              ## Lists
-              Unordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.
+              # Text
+              Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt 
+              ut labore et dolore magna aliqua. 
 
-              #### Unordered
-              * Lists are a piece of cake
-              * They even auto continue as you type
-              * A double enter will end them
-              * Tabs and shift-tabs work too
+              # Table
+              | User Name | Email |
+              | -------- | -------- |
+              | Pete     | Pete@example.com     |
 
-              #### Ordered
-              1. Numbered lists...
-              2. ...work too!
+              # Quote
+              > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              
+              # Lists
 
-              ## What about images?
-              ![Yes](https://i.imgur.com/sZlktY7.png)
+              ## Unordered
+              * List option 1
+              * List option 2
+
+              ## Ordered
+              1. List option 1
+              2. List option 2
+
+              # Images
+              ![Yes](https://www.polymer-project.org/images/logos/p-logo.png)
             </script>
           </exmg-markdown-editor>
         </template>
@@ -53,8 +68,8 @@
         <template>
           <exmg-markdown-editor line-numbers toolbar-buttons='["strong","italic","quote"]'>
             <script type="text/markdown">
-              # Intro
-              Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like `cmd-b` or `ctrl-b`.
+              # Text
+              Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt ut labore et dolore magna aliqua.   
             </script>
           </exmg-markdown-editor>
         </template>
