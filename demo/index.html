@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>exmg-markdown-editor demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../exmg-markdown-editor.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+        .centered {
+          max-width: 1000px;
+        }
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic exmg-markdown-editor demo</h3>
+      <demo-snippet>
+        <template>
+          <exmg-markdown-editor auto-focus split-view>
+            <script type="text/markdown">
+              # Intro
+              Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like `cmd-b` or `ctrl-b`.
+
+              ## Lists
+              Unordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.
+
+              #### Unordered
+              * Lists are a piece of cake
+              * They even auto continue as you type
+              * A double enter will end them
+              * Tabs and shift-tabs work too
+
+              #### Ordered
+              1. Numbered lists...
+              2. ...work too!
+
+              ## What about images?
+              ![Yes](https://i.imgur.com/sZlktY7.png)
+            </script>
+          </exmg-markdown-editor>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <exmg-markdown-editor line-numbers toolbar-buttons='["strong","italic","quote"]'>
+            <script type="text/markdown">
+              # Intro
+              Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com). You can type the Markdown syntax, use the toolbar, or use shortcuts like `cmd-b` or `ctrl-b`.
+            </script>
+          </exmg-markdown-editor>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>
