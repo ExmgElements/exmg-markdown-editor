@@ -20,14 +20,19 @@
         line-height: 20px;
         @apply --exmg-markdown-editor;
       }
+
+      #editor {
+        overflow: auto;
+      }
   
       ::slotted(*) {
         display: none;
+        overflow: auto;
       }
 
       :host([split-view]) ::slotted(*) {
         display: block;
-        background: var(--exmg-markdown-editor-preview-background);
+        background: var(--exmg-markdown-editor-preview-background, white);
         border-left: 1px solid var(--exmg-markdown-editor-border, #ddd);
         padding: 16px;
         @apply --exmg-markdown-editor-preview;
@@ -35,7 +40,7 @@
 
       .container {
         box-sizing: border-box;
-        background: var(--exmg-markdown-editor-background, white);
+        background: var(--exmg-markdown-editor-background-color, white);
         @apply --layout-horizontal;
       }
 
@@ -104,9 +109,11 @@
         width: 30px;
         line-height: 30px;
         margin: 0;
+        border-radius: 4px;
         color: var(--exmg-markdown-editor-toolbar-color, rgba(0, 0, 0, 0.87));
         border: 1px solid transparent;
         cursor: pointer;
+        @apply --exmg-markdown-editor-toolbar-button;
       }
 
       .toolbar a[disabled] {
@@ -114,12 +121,12 @@
       }
 
       .toolbar a:hover {
-        border-color: var(--exmg-markdown-editor-toolbar-color-hover, rgba(0, 0, 0, 0.24));
-        @apply --exmg-markdown-editor-toolbar-hover;
+        background: var(--exmg-markdown-editor-toolbar-button-background-hover, #fafafa);
+        @apply --exmg-markdown-editor-toolbar-button-hover;
       }
       .toolbar .seperator {
         margin: 0 8px;
-        border-left: 1px solid var(--exmg-markdown-toolbar-seperator-color, #ddd);
+        border-left: 1px solid var(--exmg-markdown-editor-toolbar-seperator-color, #ddd);
       }
 
     </style>
@@ -184,7 +191,7 @@
     * ### Styling
     *
     * The preview panel markdown output can be styled from outside th element. See the demo/styling.html example
-    * on how to do this.
+    * on how to do this. In this demo the github-markdown-css project is used for styling the html output.
     *
     * `<exmg-markdown-editor>` provides the following custom properties and mixins
     *  for styling:
@@ -193,14 +200,17 @@
     *  ----------------|-------------|----------
     *  `--exmg-markdown-editor` | editor mixin | `{}`
     *  `--exmg-markdown-editor-border` | Border Color | `#ddd`
+    *  `--exmg-markdown-editor-background-color` | Editor Background Color | `white`
     *  `--exmg-markdown-editor-fullscreen-top-offset` | Top offset in fullscreen mode | `0px`
     *  `--exmg-markdown-editor-toolbar-background` | Toolbar background color | `#fafafa`
     *  `--exmg-markdown-editor-toolbar-color` | Toolbar text color | `87% black`
     *  `--exmg-markdown-editor-toolbar-color-disabled` | Toolbar text color disabled | `54% black`
+    *  `--exmg-markdown-editor-preview` | HTML Preview mixin | `{}`
     *  `--exmg-markdown-editor-preview-background` | Preview background color | `white`
-    *  `--exmg-markdown-editor-toolbar-color-hover` | Toolbar icon border color | `24% black`
-    *  `--exmg-markdown-editor-toolbar-hover` | toolbar icon hover mixin | `{}`
-    *
+    *  `--exmg-markdown-editor-toolbar-button-hover` | Toolbar button mixin | `{}`
+    *  `--exmg-markdown-editor-toolbar-button-background-hover` | Toolbar icon border color | `#fafafa`
+    *  `--exmg-markdown-editor-toolbar-seperator-color` | Toolbar seperator color | `#ddd`
+    *  `--exmg-markdown-editor-code` | CodeMirror root mixin | `{}`
     *
     *
     * @customElement
@@ -248,8 +258,8 @@
           },
           toolbarButtons: {
             type: Array,
-            value: () => ['undo', 'redo', '|', 'strong', 'italic', 'strikethrough',
-              '|', 'quote', 'hr', 'table', '|', 'unordered-list',
+            value: () => ['undo', 'redo', '|', 'header', 'strong', 'italic', 'strikethrough',
+              '|', 'quote', 'hr', 'table', 'code', '|', 'unordered-list',
               'ordered-list', '|', 'fullscreen', 'split-view'],
           },
           _toolbarButtons: {
@@ -266,6 +276,12 @@
               action: '_redo',
               className: 'btn-redo',
               title: 'Redo',
+            }, {
+              name: 'header',
+              icon: 'exmg-markdown-editor-icons:text-fields',
+              action: '_toggleHeader',
+              className: 'btn-header',
+              title: 'Header',
             }, {
               name: 'strong',
               icon: 'exmg-markdown-editor-icons:format-bold',
@@ -296,6 +312,12 @@
               action: '_toggleHorizontalRule',
               className: 'btn-horizontal-rule',
               title: 'Horizontal Rule',
+            }, {
+              name: 'code',
+              icon: 'exmg-markdown-editor-icons:code',
+              action: '_toggleCode',
+              className: 'btn-code',
+              title: 'Code',
             }, {
               name: 'table',
               icon: 'exmg-markdown-editor-icons:grid-on',
@@ -360,11 +382,9 @@
         const markedElement = this.markdownElement;
 
         if (markedElement.markdown) {
-          console.log('1111');
           this.codeMirror.setValue(markedElement.markdown);
         } else {
           markedElement.addEventListener('marked-render-complete', function onMarkedLoadend(event) {
-            console.log('onMarkedLoadend');
             markedElement.removeEventListener('marked-render-complete', onMarkedLoadend);
             self.set('markdown', markedElement.markdown);
           });
@@ -391,7 +411,6 @@
       }
 
       _markdownChanged(markdown) {
-        console.log('_markdownChanged', markdown);
         if (this.markdownElement) {
           this.markdownElement.markdown = markdown;
         }
@@ -539,6 +558,7 @@
         const states = this._getStates();
         const blockStyles = {
           'strong': '**',
+          'inline-code': '`',
           'code': '```',
           'italic': '*',
           'strikethrough': '~~',
@@ -565,7 +585,8 @@
           cursorStart.ch -= blockStyles[type].length;
           cursorEnd.ch -= blockStyles[type].length;
         } else {
-          const text = blockStyles[type] + (emptySelection ? type + ' text' : selectionText) + blockStyles[type];
+          const text = blockStyles[type] + (type === 'code' ? '\n' : '') + (emptySelection ? type + ' text' : selectionText) 
+            + (type === 'code' ? '\n' : '') + blockStyles[type];
           codeMirror.replaceSelection(text);
           cursorEnd.ch = cursorStart.ch + text.length;
           cursorStart.ch += blockStyles[type].length;
@@ -577,34 +598,55 @@
       }
       _processLine(type, symbol) {
         const codeMirror = this.codeMirror;
-        const states = this._getStates();
+        
         const cursorStart = codeMirror.getCursor('start');
         const cursorEnd = codeMirror.getCursor('end');
 
         let lineCount = 0;
         for (let i = cursorStart.line; i <= cursorEnd.line; i++) {
-          var text = codeMirror.getLine(i);
-          if (states.includes(type)) {
-            text = '';
-          } else {
-            switch (type) {
-              case 'quote':
-              case 'unordered-list':
+          const linestart = Object.assign(Object.assign({}, cursorStart), {line: i, ch: 0, sticky: 'after'});
+          const states = this._getStates(linestart);
+          let text = codeMirror.getLine(i);
+          const stateFound = states.includes(type);
+  
+          switch (type) {
+            case 'header': {
+              const result = /(^[\#]+)/.exec(text);
+              if (result === null) {
                 text = `${symbol} ${text}`;
-                break;
-              case 'ordered-list':
-                text = (lineCount + 1) + '. ' + text;
-                break;
+              } else {
+                text = result[0].length === 6 ? text.substring(7) : `${symbol}${text}`;
+              }
+              break;
             }
+            case 'quote':
+            case 'unordered-list':
+              text = stateFound ? text.substring(2) : `${symbol} ${text}`;
+              break;
+            case 'ordered-list':
+              text = stateFound ? text.substring(3) : (lineCount + 1) + '. ' + text;
+              break;
           }
+         
           this._replaceRangeLine(text, i);
           lineCount++;
         }
+
+        codeMirror.setSelection(cursorStart, cursorEnd);
         codeMirror.focus();
       }
-      _getStates() {
+      _isSelectionInline() {
         const codeMirror = this.codeMirror;
-        const pos = codeMirror.getCursor('start');
+        const cursorStart = codeMirror.getCursor('start');
+        const cursorEnd = codeMirror.getCursor('end');
+        const lineLength = codeMirror.getLine(cursorStart.line).length;
+        debugger;
+        return cursorStart.line === cursorEnd.line && (cursorEnd.ch - cursorStart.ch !== lineLength);
+      }
+      _getStates(pos) {
+        const codeMirror = this.codeMirror;
+        pos = pos || Object.assign({}, codeMirror.getCursor('start'));
+        console.log('pos', pos);
         if (pos.sticky === 'after') {
           pos.ch++;
         }
@@ -621,6 +663,7 @@
           const index = states.indexOf('variable-2');
           states[index] = /^\s*\d+\.\s/.test(text) ? 'ordered-list' : 'unordered-list';
         }
+        console.log('states', states);
         return states;
       }
       _toggleHorizontalRule() {
@@ -647,8 +690,14 @@
       _toggleOrderedList() {
         this._processLine('ordered-list');
       }
+      _toggleHeader() {
+        this._processLine('header', '#');
+      }
       _insertTable() {
         this._insertAtCursor(insertBlocks.table, 2, 8);
+      }
+      _toggleCode() {
+        this._processBlock(this._isSelectionInline() ? 'inline-code' : 'code');
       }
       _undo(editor) {
         const {codeMirror} = this;

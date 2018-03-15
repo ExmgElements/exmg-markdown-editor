@@ -26,8 +26,9 @@
           --exmg-markdown-editor-toolbar-background: #333;
           --exmg-markdown-editor-toolbar-color: #b9b9b9;
           --exmg-markdown-editor-toolbar-color-disabled: #494949;
+          --exmg-markdown-editor-toolbar-button-background-hover: #666;
+          --exmg-markdown-editor-toolbar-seperator-color: #b9b9b9;
           --exmg-markdown-editor-preview-background: rgb(243, 243, 243);
-          --exmg-markdown-toolbar-seperator-color: #b9b9b9;
           --exmg-markdown-editor-background: #e4e4e4;
           --exmg-markdown-editor-code: {
             font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
@@ -36,7 +37,10 @@
             padding: 16px 32px;
           }
         }
-
+        .markdown-body h1,
+        .markdown-body h2 {
+          border-bottom: 1px solid #bbbcbe;
+        }
         .markdown-body {
           font-family: Lato, "Helvetica Neue", Helvetica, sans-serif;
         }
@@ -49,8 +53,8 @@
         <template>
           <dom-bind>
             <template>
-              <exmg-markdown-editor markdown="{{markdown}}" split-view fullscreen toolbar-buttons='["strong", "italic", "strikethrough","|", "quote", "hr", "table", "|", "unordered-list","ordered-list", "|","split-view"]'>
-                <marked-element markdown="{{markdown}}">
+              <exmg-markdown-editor split-view fullscreen toolbar-buttons='["header", "strong", "italic", "strikethrough","|", "quote", "hr", "table", "code", "|", "unordered-list","ordered-list", "|","split-view"]'>
+                <marked-element>
                   <div slot="markdown-html" class="markdown-body"></div>
                   <script type="text/markdown">
                     # Headers
