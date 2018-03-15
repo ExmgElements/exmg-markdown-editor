@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>exmg-markdown-editor demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../marked-element/marked-element.html">
+    <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
+    
+    <link rel="import" href="../exmg-markdown-editor.html">
+    <link rel="stylesheet" href="../../github-markdown-css/github-markdown.css">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+        .centered {
+          max-width: 1000px;
+        }
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+
+      <demo-snippet>
+        <template>
+          <dom-bind>
+            <template>
+              <exmg-markdown-editor auto-focus split-view toolbar-buttons='["undo","redo"]'>
+                <marked-element>
+                  <div slot="markdown-html" class="markdown-body"></div>
+                  <script type="text/markdown">
+                    # Text
+                    Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt 
+                    ut labore et dolore magna aliqua. 
+                  </script>
+                </marked-element>
+              </exmg-markdown-editor>
+            </template>
+          </dom-bind>
+        </template>
+      </demo-snippet>
+      
+    </div>
+  </body>
+</html>

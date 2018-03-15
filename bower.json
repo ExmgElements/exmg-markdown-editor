@@ -7,13 +7,14 @@
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.1.0",
     "codemirror": "^5.26.0",
-    "marked-element": "PolymerElements/marked-element#^2.4.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.3"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "marked-element": "PolymerElements/marked-element#^2.4.0",
+    "github-markdown-css": "^2.10.0",
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.1"
   },
   "resolutions": {

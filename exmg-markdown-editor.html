@@ -4,12 +4,11 @@
 <link rel="import" href="../marked-element/marked-element.html">
 <link rel="import" href="exmg-markdown-editor-icons.html">
 <link rel="import" href="exmg-markdown-editor-import.html">
-<link rel="import" href="exmg-markdown-editor-styles.html">
 
 <dom-module id="exmg-markdown-editor">
   <link rel="import" type="css" href="bower_components/codemirror/lib/codemirror.css">
   <template>
-    <style include="exmg-markdown-editor-styles">
+    <style>
       :host {
         display: block;
         border: 1px solid var(--exmg-markdown-editor-border, #ddd);
@@ -21,16 +20,17 @@
         line-height: 20px;
         @apply --exmg-markdown-editor;
       }
-
-      marked-element {
+  
+      ::slotted(*) {
         display: none;
-        background: var(--exmg-markdown-editor-preview-background, white);
-        @apply --exmg-markdown-editor-preview;
       }
 
-      :host([split-view]) marked-element {
+      :host([split-view]) ::slotted(*) {
         display: block;
+        background: var(--exmg-markdown-editor-preview-background);
         border-left: 1px solid var(--exmg-markdown-editor-border, #ddd);
+        padding: 16px;
+        @apply --exmg-markdown-editor-preview;
       }
 
       .container {
@@ -48,9 +48,9 @@
         z-index: 9;
       }
 
+      :host([split-view]) ::slotted(*),
       .container > * {
         @apply --layout-flex;
-        padding: 10px;
       }
 
       :host([line-numbers]) .container #editor {
@@ -62,6 +62,9 @@
         min-height: 300px;
         font: inherit;
         z-index: 1;
+        padding: 16px;
+        background: none;
+        @apply --exmg-markdown-editor-code;
       }
 
       .CodeMirror-scroll {
@@ -101,7 +104,7 @@
         width: 30px;
         line-height: 30px;
         margin: 0;
-        color: var(--exmg-markdown-editor-toolbar-color-disabled, rgba(0, 0, 0, 0.87));
+        color: var(--exmg-markdown-editor-toolbar-color, rgba(0, 0, 0, 0.87));
         border: 1px solid transparent;
         cursor: pointer;
       }
@@ -116,7 +119,7 @@
       }
       .toolbar .seperator {
         margin: 0 8px;
-        border-left: 1px solid var(--exmg-markdown-editor-border, #ddd);
+        border-left: 1px solid var(--exmg-markdown-toolbar-seperator-color, #ddd);
       }
 
     </style>
@@ -132,9 +135,7 @@
     </div>
     <div class="container">
       <div id="editor"></div>
-      <marked-element markdown="[[markdown]]">
-        <div slot="markdown-html" class="markdown-body"></div>
-      </marked-element>
+      <slot></slot>
     </div>
   </template>
 
@@ -153,21 +154,37 @@
     };
 
     /**
-    * Markdown editor element
+    * Markdown WYSIWYG editor element.
+    * This editor element is a wrapper element for the markdown-element which will enable editing
+    * the markdown data. See [marked-element](https://www.webcomponents.org/element/PolymerElements/marked-element/)
+    * for more details on how to use this element.
+    *
+    * ```
+    * <exmg-markdown-editor markdown="{{markdown}}">
+    *   <marked-element markdown="{{markdown}}">
+    *     <div slot="markdown-html"></div>
+    *     <script type="text/markdown"\>
+    *     # Header
+    *     ...
+    *     </script\>
+    *   </marked-element>
+    * </exmg-markdown-editor>
+    * ```
+    *
+    * ## Custom Toolbar
+    * Add attribute toolbar-buttons to adjust the toolbar buttons. The array values should match
+    * the _toolbarButtons item name values.
     *
     * ```html
-    * <exmg-markdown-editor>
-    *  <script type="text/markdown">
-    *   # H1
-    *   ## H2
-    *   ### H3
-    *   #### H4
-    *   ##### H5
-    *   ###### H6
+    * <exmg-markdown-editor toolbar-buttons='["strong","italic","strikethrough","|","quote","hr","table"]'>
+    *  ...
     * </exmg-markdown-editor>
     * ```
     *
     * ### Styling
+    *
+    * The preview panel markdown output can be styled from outside th element. See the demo/styling.html example
+    * on how to do this.
     *
     * `<exmg-markdown-editor>` provides the following custom properties and mixins
     *  for styling:
@@ -183,6 +200,7 @@
     *  `--exmg-markdown-editor-preview-background` | Preview background color | `white`
     *  `--exmg-markdown-editor-toolbar-color-hover` | Toolbar icon border color | `24% black`
     *  `--exmg-markdown-editor-toolbar-hover` | toolbar icon hover mixin | `{}`
+    *
     *
     *
     * @customElement
@@ -214,7 +232,8 @@
           },
           markdown: {
             type: String,
-            observer: '_updateDocHistory',
+            notify: true,
+            observer: '_markdownChanged',
           },
           splitView: {
             type: Boolean,
@@ -325,25 +344,30 @@
           },
         };
       }
+
+      get markdownElement() {
+        return this.querySelector('marked-element');
+      }
+
       /**
        * When ready check if markdown property is set or otherwise look for script tag
        */
       ready() {
         super.ready();
-        if (this.markdown) {
-          return;
-        }
+        this.setupEditor();
 
-        // Use the Markdown from the first `<script>` descendant whose MIME type starts with
-        // "text/markdown". Script elements beyond the first are ignored.
-        this._markdownElement = this.querySelector('[type="text/markdown"]');
-  
-        if (!this._markdownElement) {
-          return;
-        }
-        if (this._markdownElement.textContent.trim() !== '') {
-          this.markdown = this._unindent(this._markdownElement.textContent);
-          this.setupEditor();
+        var self = this;
+        const markedElement = this.markdownElement;
+
+        if (markedElement.markdown) {
+          console.log('1111');
+          this.codeMirror.setValue(markedElement.markdown);
+        } else {
+          markedElement.addEventListener('marked-render-complete', function onMarkedLoadend(event) {
+            console.log('onMarkedLoadend');
+            markedElement.removeEventListener('marked-render-complete', onMarkedLoadend);
+            self.set('markdown', markedElement.markdown);
+          });
         }
       }
       /**
@@ -365,33 +389,15 @@
         });
         return toolbar;
       }
-      /**
-       * Unindent markdown string when read from script tag
-       * @param {string} text
-       * @return {string}
-       */
-      _unindent(text) {
-        if (!text) {
-          return text;
+
+      _markdownChanged(markdown) {
+        console.log('_markdownChanged', markdown);
+        if (this.markdownElement) {
+          this.markdownElement.markdown = markdown;
         }
-        var lines = text.replace(/\t/g, '  ').split('\n');
-        var indent = lines.reduce((prev, line) => {
-          if (/^\s*$/.test(line)) {
-            return prev;
-          }
-          var lineIndent = line.match(/^(\s*)/)[0].length;
-          if (prev === null) {
-            return lineIndent;
-          }
-          return lineIndent < prev ? lineIndent : prev;
-        }, null);
-        if (lines.length > 0 && lines[0] === '') {
-          lines.splice(0, 1);
-        }
-        return lines.map((l) => {
-          return l.substr(indent);
-        }).join('\n');
+        this._updateDocHistory();
       }
+
       /**
        * Manages the undo/redo disabled state based uppon the available hidtory in code mirror
        * @param {string} text
@@ -491,7 +497,7 @@
         /* initialize code mirror */
         this.codeMirror = CodeMirror(this.$.editor, {
           mode: 'markdown',
-          value: this.markdown,
+          value: this.markdown || '',
           tabSize: 2,
           indentUnit: 2,
           indentWithTabs: this.indentWithTabs,
@@ -658,8 +664,8 @@
 
     window.customElements.define(EditorElement.is, EditorElement);
     /**
-     * @namespace Exmg
-     */
+    * @namespace Exmg
+    */
     window.Exmg = window.Exmg || {};
     Exmg.EditorElement = EditorElement;
   }

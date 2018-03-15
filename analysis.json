@@ -8,17 +8,17 @@
       "sourceRange": {
         "file": "exmg-markdown-editor.html",
         "start": {
-          "line": 662,
+          "line": 656,
           "column": 4
         },
         "end": {
-          "line": 662,
+          "line": 656,
           "column": 36
         }
       },
       "elements": [
         {
-          "description": "Markdown editor element\n\n```html\n<exmg-markdown-editor>\n <script type=\"text/markdown\">\n  # H1\n  ## H2\n  ### H3\n  #### H4\n  ##### H5\n  ###### H6\n</exmg-markdown-editor>\n```\n\n### Styling\n\n`<exmg-markdown-editor>` provides the following custom properties and mixins\n for styling:\n\n Custom property | Description | Default\n ----------------|-------------|----------\n `--exmg-markdown-editor` | editor mixin | `{}`\n `--exmg-markdown-editor-border` | Border Color | `#ddd`\n `--exmg-markdown-editor-fullscreen-top-offset` | Top offset in fullscreen mode | `0px`\n `--exmg-markdown-editor-toolbar-background` | Toolbar background color | `#fafafa`\n `--exmg-markdown-editor-toolbar-color` | Toolbar text color | `87% black`\n `--exmg-markdown-editor-toolbar-color-disabled` | Toolbar text color disabled | `54% black`\n `--exmg-markdown-editor-preview-background` | Preview background color | `white`\n `--exmg-markdown-editor-toolbar-color-hover` | Toolbar icon border color | `24% black`\n `--exmg-markdown-editor-toolbar-hover` | toolbar icon hover mixin | `{}`",
+          "description": "Markdown WYSIWYG editor element.\nThis editor element is a wrapper element for the markdown-element which will enable editing \nthe markdown data. See [marked-element](https://www.webcomponents.org/element/PolymerElements/marked-element/) for more details on how to use this element. \n\n```\n<exmg-markdown-editor markdown=\"{{markdown}}\">\n  <marked-element markdown=\"{{markdown}}\">\n    <div slot=\"markdown-html\"></div>\n    <script type=\"text/markdown\"\\>\n    # Header\n    ...\n    </script\\>\n  </marked-element>\n</exmg-markdown-editor>\n```\n\n## Custom Toolbar\nAdd attribute toolbar-buttons to adjust the toolbar buttons. The array values should match \nthe _toolbarButtons item name values. \n\n```html\n<exmg-markdown-editor toolbar-buttons='[\"strong\",\"italic\",\"strikethrough\",\"|\",\"quote\",\"hr\",\"table\"]'>\n ...\n</exmg-markdown-editor>\n```\n\n### Styling\n\nThe preview panel markdown output can be styled from outside th element. See the demo/styling.html example \non how to do this.\n\n`<exmg-markdown-editor>` provides the following custom properties and mixins\n for styling:\n\n Custom property | Description | Default\n ----------------|-------------|----------\n `--exmg-markdown-editor` | editor mixin | `{}`\n `--exmg-markdown-editor-border` | Border Color | `#ddd`\n `--exmg-markdown-editor-fullscreen-top-offset` | Top offset in fullscreen mode | `0px`\n `--exmg-markdown-editor-toolbar-background` | Toolbar background color | `#fafafa`\n `--exmg-markdown-editor-toolbar-color` | Toolbar text color | `87% black`\n `--exmg-markdown-editor-toolbar-color-disabled` | Toolbar text color disabled | `54% black`\n `--exmg-markdown-editor-preview-background` | Preview background color | `white`\n `--exmg-markdown-editor-toolbar-color-hover` | Toolbar icon border color | `24% black`\n `--exmg-markdown-editor-toolbar-hover` | toolbar icon hover mixin | `{}`",
           "summary": "Markdown editor element",
           "path": "exmg-markdown-editor.html",
           "properties": [
@@ -604,11 +604,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 202,
+                  "line": 215,
                   "column": 10
                 },
                 "end": {
-                  "line": 205,
+                  "line": 218,
                   "column": 11
                 }
               },
@@ -624,11 +624,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 206,
+                  "line": 219,
                   "column": 10
                 },
                 "end": {
-                  "line": 209,
+                  "line": 222,
                   "column": 11
                 }
               },
@@ -644,11 +644,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 210,
+                  "line": 223,
                   "column": 10
                 },
                 "end": {
-                  "line": 213,
+                  "line": 226,
                   "column": 11
                 }
               },
@@ -664,16 +664,17 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 214,
+                  "line": 227,
                   "column": 10
                 },
                 "end": {
-                  "line": 217,
+                  "line": 231,
                   "column": 11
                 }
               },
               "metadata": {
                 "polymer": {
+                  "notify": true,
                   "observer": "\"_updateDocHistory\""
                 }
               }
@@ -685,11 +686,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 218,
+                  "line": 232,
                   "column": 10
                 },
                 "end": {
-                  "line": 222,
+                  "line": 236,
                   "column": 11
                 }
               },
@@ -705,11 +706,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 223,
+                  "line": 237,
                   "column": 10
                 },
                 "end": {
-                  "line": 228,
+                  "line": 242,
                   "column": 11
                 }
               },
@@ -727,11 +728,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 229,
+                  "line": 243,
                   "column": 10
                 },
                 "end": {
-                  "line": 234,
+                  "line": 248,
                   "column": 11
                 }
               },
@@ -747,11 +748,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 235,
+                  "line": 249,
                   "column": 10
                 },
                 "end": {
-                  "line": 310,
+                  "line": 324,
                   "column": 11
                 }
               },
@@ -767,11 +768,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 311,
+                  "line": 325,
                   "column": 10
                 },
                 "end": {
-                  "line": 324,
+                  "line": 338,
                   "column": 11
                 }
               },
@@ -1028,11 +1029,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 330,
+                  "line": 346,
                   "column": 6
                 },
                 "end": {
-                  "line": 347,
+                  "line": 367,
                   "column": 7
                 }
               },
@@ -2910,11 +2911,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 353,
+                  "line": 373,
                   "column": 6
                 },
                 "end": {
-                  "line": 366,
+                  "line": 386,
                   "column": 7
                 }
               },
@@ -2930,41 +2931,16 @@
               }
             },
             {
-              "name": "_unindent",
-              "description": "Unindent markdown string when read from script tag",
-              "privacy": "protected",
-              "sourceRange": {
-                "start": {
-                  "line": 372,
-                  "column": 6
-                },
-                "end": {
-                  "line": 393,
-                  "column": 7
-                }
-              },
-              "metadata": {},
-              "params": [
-                {
-                  "name": "text",
-                  "type": "string"
-                }
-              ],
-              "return": {
-                "type": "string"
-              }
-            },
-            {
               "name": "_updateDocHistory",
               "description": "Manages the undo/redo disabled state based uppon the available hidtory in code mirror",
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 399,
+                  "line": 393,
                   "column": 6
                 },
                 "end": {
-                  "line": 420,
+                  "line": 414,
                   "column": 7
                 }
               },
@@ -2980,11 +2956,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 421,
+                  "line": 415,
                   "column": 6
                 },
                 "end": {
-                  "line": 423,
+                  "line": 417,
                   "column": 7
                 }
               },
@@ -2997,11 +2973,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 424,
+                  "line": 418,
                   "column": 6
                 },
                 "end": {
-                  "line": 426,
+                  "line": 420,
                   "column": 7
                 }
               },
@@ -3014,11 +2990,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 427,
+                  "line": 421,
                   "column": 6
                 },
                 "end": {
-                  "line": 432,
+                  "line": 426,
                   "column": 7
                 }
               },
@@ -3035,11 +3011,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 433,
+                  "line": 427,
                   "column": 6
                 },
                 "end": {
-                  "line": 436,
+                  "line": 430,
                   "column": 7
                 }
               },
@@ -3056,11 +3032,11 @@
               "privacy": "public",
               "sourceRange": {
                 "start": {
-                  "line": 437,
+                  "line": 431,
                   "column": 6
                 },
                 "end": {
-                  "line": 516,
+                  "line": 510,
                   "column": 7
                 }
               },
@@ -3073,11 +3049,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 517,
+                  "line": 511,
                   "column": 6
                 },
                 "end": {
-                  "line": 519,
+                  "line": 513,
                   "column": 7
                 }
               },
@@ -3097,11 +3073,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 520,
+                  "line": 514,
                   "column": 6
                 },
                 "end": {
-                  "line": 529,
+                  "line": 523,
                   "column": 7
                 }
               },
@@ -3124,11 +3100,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 530,
+                  "line": 524,
                   "column": 6
                 },
                 "end": {
-                  "line": 570,
+                  "line": 564,
                   "column": 7
                 }
               },
@@ -3145,11 +3121,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 571,
+                  "line": 565,
                   "column": 6
                 },
                 "end": {
-                  "line": 597,
+                  "line": 591,
                   "column": 7
                 }
               },
@@ -3169,11 +3145,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 598,
+                  "line": 592,
                   "column": 6
                 },
                 "end": {
-                  "line": 618,
+                  "line": 612,
                   "column": 7
                 }
               },
@@ -3186,7 +3162,41 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
+                  "line": 613,
+                  "column": 6
+                },
+                "end": {
+                  "line": 618,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "params": []
+            },
+            {
+              "name": "_toggleStrikethrough",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
                   "line": 619,
+                  "column": 6
+                },
+                "end": {
+                  "line": 621,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "params": []
+            },
+            {
+              "name": "_toggleBold",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 622,
                   "column": 6
                 },
                 "end": {
@@ -3198,7 +3208,7 @@
               "params": []
             },
             {
-              "name": "_toggleStrikethrough",
+              "name": "_toggleItalic",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3215,7 +3225,7 @@
               "params": []
             },
             {
-              "name": "_toggleBold",
+              "name": "_toggleBlockquote",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3232,7 +3242,7 @@
               "params": []
             },
             {
-              "name": "_toggleItalic",
+              "name": "_toggleUnorderedList",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3249,7 +3259,7 @@
               "params": []
             },
             {
-              "name": "_toggleBlockquote",
+              "name": "_toggleOrderedList",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3266,7 +3276,7 @@
               "params": []
             },
             {
-              "name": "_toggleUnorderedList",
+              "name": "_insertTable",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3283,7 +3293,7 @@
               "params": []
             },
             {
-              "name": "_toggleOrderedList",
+              "name": "_undo",
               "description": "",
               "privacy": "protected",
               "sourceRange": {
@@ -3292,41 +3302,7 @@
                   "column": 6
                 },
                 "end": {
-                  "line": 642,
-                  "column": 7
-                }
-              },
-              "metadata": {},
-              "params": []
-            },
-            {
-              "name": "_insertTable",
-              "description": "",
-              "privacy": "protected",
-              "sourceRange": {
-                "start": {
-                  "line": 643,
-                  "column": 6
-                },
-                "end": {
-                  "line": 645,
-                  "column": 7
-                }
-              },
-              "metadata": {},
-              "params": []
-            },
-            {
-              "name": "_undo",
-              "description": "",
-              "privacy": "protected",
-              "sourceRange": {
-                "start": {
-                  "line": 646,
-                  "column": 6
-                },
-                "end": {
-                  "line": 650,
+                  "line": 644,
                   "column": 7
                 }
               },
@@ -3343,11 +3319,11 @@
               "privacy": "protected",
               "sourceRange": {
                 "start": {
-                  "line": 651,
+                  "line": 645,
                   "column": 6
                 },
                 "end": {
-                  "line": 655,
+                  "line": 649,
                   "column": 7
                 }
               },
@@ -4303,11 +4279,11 @@
           "metadata": {},
           "sourceRange": {
             "start": {
-              "line": 196,
+              "line": 209,
               "column": 4
             },
             "end": {
-              "line": 656,
+              "line": 650,
               "column": 5
             }
           },
@@ -4320,11 +4296,11 @@
               "description": "",
               "sourceRange": {
                 "start": {
-                  "line": 202,
+                  "line": 215,
                   "column": 10
                 },
                 "end": {
-                  "line": 205,
+                  "line": 218,
                   "column": 11
                 }
               },
@@ -4336,55 +4312,7 @@
               "description": "",
               "sourceRange": {
                 "start": {
-                  "line": 206,
-                  "column": 10
-                },
-                "end": {
-                  "line": 209,
-                  "column": 11
-                }
-              },
-              "metadata": {},
-              "type": "boolean"
-            },
-            {
-              "name": "indent-with-tabs",
-              "description": "",
-              "sourceRange": {
-                "start": {
-                  "line": 210,
-                  "column": 10
-                },
-                "end": {
-                  "line": 213,
-                  "column": 11
-                }
-              },
-              "metadata": {},
-              "type": "boolean"
-            },
-            {
-              "name": "markdown",
-              "description": "",
-              "sourceRange": {
-                "start": {
-                  "line": 214,
-                  "column": 10
-                },
-                "end": {
-                  "line": 217,
-                  "column": 11
-                }
-              },
-              "metadata": {},
-              "type": "string"
-            },
-            {
-              "name": "split-view",
-              "description": "",
-              "sourceRange": {
-                "start": {
-                  "line": 218,
+                  "line": 219,
                   "column": 10
                 },
                 "end": {
@@ -4396,7 +4324,7 @@
               "type": "boolean"
             },
             {
-              "name": "fullscreen",
+              "name": "indent-with-tabs",
               "description": "",
               "sourceRange": {
                 "start": {
@@ -4404,7 +4332,55 @@
                   "column": 10
                 },
                 "end": {
-                  "line": 228,
+                  "line": 226,
+                  "column": 11
+                }
+              },
+              "metadata": {},
+              "type": "boolean"
+            },
+            {
+              "name": "markdown",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 227,
+                  "column": 10
+                },
+                "end": {
+                  "line": 231,
+                  "column": 11
+                }
+              },
+              "metadata": {},
+              "type": "string"
+            },
+            {
+              "name": "split-view",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 232,
+                  "column": 10
+                },
+                "end": {
+                  "line": 236,
+                  "column": 11
+                }
+              },
+              "metadata": {},
+              "type": "boolean"
+            },
+            {
+              "name": "fullscreen",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 237,
+                  "column": 10
+                },
+                "end": {
+                  "line": 242,
                   "column": 11
                 }
               },
@@ -4416,11 +4392,11 @@
               "description": "",
               "sourceRange": {
                 "start": {
-                  "line": 229,
+                  "line": 243,
                   "column": 10
                 },
                 "end": {
-                  "line": 234,
+                  "line": 248,
                   "column": 11
                 }
               },
@@ -4432,11 +4408,11 @@
               "description": "",
               "sourceRange": {
                 "start": {
-                  "line": 311,
+                  "line": 325,
                   "column": 10
                 },
                 "end": {
-                  "line": 324,
+                  "line": 338,
                   "column": 11
                 }
               },
@@ -4444,12 +4420,35 @@
               "type": "Object"
             }
           ],
-          "events": [],
+          "events": [
+            {
+              "type": "CustomEvent",
+              "name": "markdown-changed",
+              "description": "Fired when the `markdown` property changes.",
+              "metadata": {}
+            }
+          ],
           "styling": {
             "cssVariables": [],
             "selectors": []
           },
-          "slots": [],
+          "slots": [
+            {
+              "description": "",
+              "name": "",
+              "range": {
+                "file": "exmg-markdown-editor.html",
+                "start": {
+                  "line": 133,
+                  "column": 6
+                },
+                "end": {
+                  "line": 133,
+                  "column": 19
+                }
+              }
+            }
+          ],
           "tagname": "exmg-markdown-editor"
         }
       ]
