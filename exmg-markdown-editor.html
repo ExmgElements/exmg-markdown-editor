@@ -116,6 +116,10 @@
         @apply --exmg-markdown-editor-toolbar-button;
       }
 
+      .toolbar a iron-icon {
+        margin: 4px;
+      }
+
       .toolbar a[disabled] {
         color: var(--exmg-markdown-editor-toolbar-color-disabled, rgba(0, 0, 0, 0.54));
       }
@@ -553,7 +557,26 @@
         codeMirror.setSelection(cursorStart, {line: cursorStart.line, ch: cursorStart.ch + (selectionLength || text.lenth)});
         codeMirror.focus();
       }
-      _processBlock(type) {
+      _hasType(states, type) {
+        const mappings = [{
+          key: 'code',
+          value: 'comment',
+        }, {
+          key: 'inline-code',
+          value: 'comment',
+        }];
+
+        if (states.includes(type)) {
+          return true;
+        }
+
+        const result = mappings.find(m => {
+          return m.key === type;
+        });
+
+        return result ? states.includes(result.value) : false;
+      }
+      _processBlock(type, newLine) {
         const codeMirror = this.codeMirror;
         const states = this._getStates();
         const blockStyles = {
@@ -566,14 +589,17 @@
 
         const cursorStart = codeMirror.getCursor('start');
         const cursorEnd = codeMirror.getCursor('end');
+        const multiLineSelection = cursorStart.line !== cursorEnd.line;
         const selectionText = codeMirror.getSelection();
         const emptySelection = selectionText === '';
-
-        if (states.includes(type)) {
+// debugger;
+        if (this._hasType(states, type)) {
           const line = codeMirror.getLine(cursorStart.line);
           let start = line.slice(0, cursorStart.ch);
           let end = line.slice(cursorEnd.ch);
           switch (type) {
+            case 'code':
+            case 'inline-code':
             case 'strong':
             case 'italic':
             case 'strikethrough':
@@ -585,12 +611,19 @@
           cursorStart.ch -= blockStyles[type].length;
           cursorEnd.ch -= blockStyles[type].length;
         } else {
-          const text = blockStyles[type] + (type === 'code' ? '\n' : '') + (emptySelection ? type + ' text' : selectionText) 
+          const text = blockStyles[type] + (type === 'code' ? '\n' : '')
+            + (emptySelection ? type + ' text' : selectionText)
             + (type === 'code' ? '\n' : '') + blockStyles[type];
           codeMirror.replaceSelection(text);
-          cursorEnd.ch = cursorStart.ch + text.length;
-          cursorStart.ch += blockStyles[type].length;
-          cursorEnd.ch -= blockStyles[type].length;
+          if (newLine) {
+            cursorStart.line += 1;
+            cursorEnd.line += 1;
+          } else {
+            cursorStart.ch += blockStyles[type].length;
+            if (!multiLineSelection) {
+              cursorEnd.ch += blockStyles[type].length;
+            }
+          }
         }
 
         codeMirror.setSelection(cursorStart, cursorEnd);
@@ -598,7 +631,6 @@
       }
       _processLine(type, symbol) {
         const codeMirror = this.codeMirror;
-        
         const cursorStart = codeMirror.getCursor('start');
         const cursorEnd = codeMirror.getCursor('end');
 
@@ -640,13 +672,12 @@
         const cursorStart = codeMirror.getCursor('start');
         const cursorEnd = codeMirror.getCursor('end');
         const lineLength = codeMirror.getLine(cursorStart.line).length;
-        debugger;
         return cursorStart.line === cursorEnd.line && (cursorEnd.ch - cursorStart.ch !== lineLength);
       }
       _getStates(pos) {
         const codeMirror = this.codeMirror;
         pos = pos || Object.assign({}, codeMirror.getCursor('start'));
-        console.log('pos', pos);
+
         if (pos.sticky === 'after') {
           pos.ch++;
         }
@@ -663,14 +694,18 @@
           const index = states.indexOf('variable-2');
           states[index] = /^\s*\d+\.\s/.test(text) ? 'ordered-list' : 'unordered-list';
         }
-        console.log('states', states);
         return states;
       }
       _toggleHorizontalRule() {
-        const cursorStart = this.codeMirror.getCursor('start');
-        const newLine = cursorStart.ch === 0;
-        this._insertAtCursor((newLine ? '' : '\n\n') + insertBlocks.hr + (newLine ? '' : '\n\n'));
-        this.codeMirror.setSelection(cursorStart, cursorStart);
+        const {codeMirror} = this;
+        const cursorStart = codeMirror.getCursor('start');
+        const lineLength = codeMirror.getLine(cursorStart.line).trim().length;
+        const newLine = cursorStart.ch === 0 && lineLength === 0;
+        const appendStr = (newLine ? '\n' : '\n\n');
+        this._insertAtCursor(appendStr + insertBlocks.hr + appendStr);
+        cursorStart.line += newLine ? 1 : 2;
+        codeMirror.setSelection(cursorStart, cursorStart);
+        codeMirror.focus();
       }
       _toggleStrikethrough() {
         this._processBlock('strikethrough');
@@ -697,7 +732,11 @@
         this._insertAtCursor(insertBlocks.table, 2, 8);
       }
       _toggleCode() {
-        this._processBlock(this._isSelectionInline() ? 'inline-code' : 'code');
+        if (this._isSelectionInline()) {
+          this._processBlock('inline-code');
+        } else {
+          this._processBlock('code', true);
+        }
       }
       _undo(editor) {
         const {codeMirror} = this;
