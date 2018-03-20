@@ -592,7 +592,7 @@
         const multiLineSelection = cursorStart.line !== cursorEnd.line;
         const selectionText = codeMirror.getSelection();
         const emptySelection = selectionText === '';
-// debugger;
+
         if (this._hasType(states, type)) {
           const line = codeMirror.getLine(cursorStart.line);
           let start = line.slice(0, cursorStart.ch);
