@@ -415,6 +415,9 @@
       }
 
       _markdownChanged(markdown) {
+        if (this.codeMirror.getValue() !== markdown) {
+          this.codeMirror.setValue(markdown);
+        } 
         if (this.markdownElement) {
           this.markdownElement.markdown = markdown;
         }
