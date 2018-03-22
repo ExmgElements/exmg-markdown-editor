@@ -1,6 +1,6 @@
 # \<exmg-markdown-editor\>
 
-
+Please visit the [API Documentation and demo](http://ExmgElements.github.io/exmg-markdown-editor/) page for more information.
 
 ## Install the Polymer-CLI
 
