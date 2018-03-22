@@ -1,0 +1,26 @@
+{
+  "name": "exmg-markdown-editor",
+  "version": "1.0.5",
+  "private": false,
+  "description": "exmg-markdown-editor",
+  "main": "exmg-markdown-editor.html",
+  "keywords": [
+    "Exmg",
+    "markdown",
+    "wysiwyg"
+  ],
+  "author": "Ex Machina",
+  "devDependencies": {
+    "bower": "latest",
+    "eslint": "^4.11.0",
+    "eslint-config-exmg": "latest",
+    "eslint-plugin-html": "^3.0.0",
+    "polymer-cli": "^1.2.0",
+    "web-component-tester": "^6.4.1"
+  },
+  "scripts": {
+    "lint": "polymer lint --rules polymer-2 --input *.html",
+    "eslint": "eslint . --ext js,html --ignore-path .gitignore",
+    "analyze": "polymer analyze --input exmg-markdown-editor.html > analysis.json"
+  }
+}
