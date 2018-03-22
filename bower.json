@@ -1,7 +1,7 @@
 {
   "name": "exmg-markdown-editor",
   "main": "exmg-markdown-editor.html",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",
