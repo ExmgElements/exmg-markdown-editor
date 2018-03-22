@@ -63,12 +63,12 @@
       }
 
       .CodeMirror {
-        height: auto;
+        height: 100%;
         min-height: 300px;
         font: inherit;
         z-index: 1;
         padding: 16px;
-        background: none;
+        background: var(--exmg-markdown-editor-code-backgroun, #f4f5f7);
         @apply --exmg-markdown-editor-code;
       }
 
@@ -76,16 +76,30 @@
         min-height: 300px
       }
 
+      .CodeMirror:not(.CodeMirror-focused):hover {
+        background: var(--exmg-markdown-editor-code-hover, white);
+      }
+
+      .CodeMirror-focused {
+        box-sizing: border-box;
+        box-shadow: inset 0 0 0 2px Highlight;
+        box-shadow: inset 0 0 0 2px -webkit-focus-ring-color;
+        overflow: hidden;
+        background: white;
+        @apply --exmg-markdown-editor-code-focused;
+      } 
+
       .toolbar {
         position: relative;
         padding: 8px 10px;
         border-bottom: 1px solid var(--exmg-markdown-editor-border, #ddd);
-        background: var(--exmg-markdown-editor-toolbar-background,#fafafa);
+        background: var(--exmg-markdown-editor-toolbar-background, #fafafa);
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         -o-user-select: none;
         user-select: none;
+        @apply --exmg-markdown-editor-toolbar;
       }
 
       :host([fullscreen]) .toolbar {
@@ -106,8 +120,6 @@
         display: inline-block;
         text-align: center;
         text-decoration: none;
-        width: 30px;
-        line-height: 30px;
         margin: 0;
         border-radius: 4px;
         color: var(--exmg-markdown-editor-toolbar-color, rgba(0, 0, 0, 0.87));
@@ -118,6 +130,9 @@
 
       .toolbar a iron-icon {
         margin: 4px;
+        width: 22px;
+        height: 22px;
+        @apply --exmg-markdown-editor-toolbar-button-icon;
       }
 
       .toolbar a[disabled] {
@@ -206,15 +221,19 @@
     *  `--exmg-markdown-editor-border` | Border Color | `#ddd`
     *  `--exmg-markdown-editor-background-color` | Editor Background Color | `white`
     *  `--exmg-markdown-editor-fullscreen-top-offset` | Top offset in fullscreen mode | `0px`
+    *  `--exmg-markdown-editor-toolbar` | editor mixin | `{}`
     *  `--exmg-markdown-editor-toolbar-background` | Toolbar background color | `#fafafa`
     *  `--exmg-markdown-editor-toolbar-color` | Toolbar text color | `87% black`
     *  `--exmg-markdown-editor-toolbar-color-disabled` | Toolbar text color disabled | `54% black`
     *  `--exmg-markdown-editor-preview` | HTML Preview mixin | `{}`
     *  `--exmg-markdown-editor-preview-background` | Preview background color | `white`
+    *  `--exmg-markdown-editor-toolbar-button-icon` | Toolbar button icon mixin | `{}`
     *  `--exmg-markdown-editor-toolbar-button-hover` | Toolbar button mixin | `{}`
     *  `--exmg-markdown-editor-toolbar-button-background-hover` | Toolbar icon border color | `#fafafa`
     *  `--exmg-markdown-editor-toolbar-seperator-color` | Toolbar seperator color | `#ddd`
     *  `--exmg-markdown-editor-code` | CodeMirror root mixin | `{}`
+    *  `--exmg-markdown-editor-code-hover` | Editor code part hover background color | `white`
+    *  `--exmg-markdown-editor-code-focused` | CodeMirror editor focused mixin | `{}`
     *
     *
     * @customElement
@@ -417,7 +436,7 @@
       _markdownChanged(markdown) {
         if (this.codeMirror.getValue() !== markdown) {
           this.codeMirror.setValue(markdown);
-        } 
+        }
         if (this.markdownElement) {
           this.markdownElement.markdown = markdown;
         }
@@ -662,7 +681,6 @@
               text = stateFound ? text.substring(3) : (lineCount + 1) + '. ' + text;
               break;
           }
-         
           this._replaceRangeLine(text, i);
           lineCount++;
         }
