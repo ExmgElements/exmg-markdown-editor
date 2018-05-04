@@ -407,6 +407,9 @@
 
         if (markedElement.markdown) {
           this.codeMirror.setValue(markedElement.markdown);
+          setTimeout(() => {
+            this.codeMirror.refresh();
+          }, 0);
         } else {
           markedElement.addEventListener('marked-render-complete', function onMarkedLoadend(event) {
             markedElement.removeEventListener('marked-render-complete', onMarkedLoadend);
