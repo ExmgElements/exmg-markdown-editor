@@ -1,26 +1,53 @@
 {
-  "name": "exmg-markdown-editor",
-  "version": "1.0.5",
-  "private": false,
-  "description": "exmg-markdown-editor",
-  "main": "exmg-markdown-editor.html",
+  "name": "@exmg/exmg-markdown-editor",
+  "flat": true,
+  "version": "3.0.0",
+  "description": "Element that wrappes around marked-element to make the markdown editable",
+  "main": "exmg-markdown-editor.js",
+  "contributors": [
+    "Ex Machina Group"
+  ],
   "keywords": [
-    "Exmg",
+    "web-components",
+    "polymer",
     "markdown",
+    "editor",
     "wysiwyg"
   ],
-  "author": "Ex Machina",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:ExmgElements/exmg-markdown-editor.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ExmgElements/exmg-markdown-editor",
+  "dependencies": {
+    "@polymer/iron-flex-layout": "^3.0.0-pre.1",
+    "@polymer/iron-icon": "^3.0.0-pre.1",
+    "@polymer/iron-iconset-svg": "^3.0.0-pre.1",
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "codemirror": "^5.37.0"
+  },
   "devDependencies": {
-    "bower": "latest",
+    "@polymer/iron-component-page": "^3.0.0-pre.19",
+    "@polymer/paper-styles": "^3.0.0-pre.19",
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "@polymer/marked-element": "^3.0.0-pre.19",
     "eslint": "^4.11.0",
     "eslint-config-exmg": "latest",
     "eslint-plugin-html": "^3.0.0",
-    "polymer-cli": "^1.2.0",
-    "web-component-tester": "^6.4.1"
+    "wct-browser-legacy": "^1.0.0",
+    "github-markdown-css": "^2.10.0"
+  },
+  "resolutions": {
+    "@webcomponents/webcomponentsjs": "2.0.0",
+    "type-detect": "1.0.0",
+    "supports-color": "3.1.2",
+    "inherits": "2.0.3",
+    "samsam": "1.1.2"
   },
   "scripts": {
-    "lint": "polymer lint --rules polymer-2 --input *.html",
+    "lint": "polymer lint --rules polymer-3 --input *.js",
     "eslint": "eslint . --ext js,html --ignore-path .gitignore",
-    "analyze": "polymer analyze --input exmg-markdown-editor.html > analysis.json"
+    "analyze": "polymer analyze --input exmg-markdown-editor.js > analysis.json"
   }
 }

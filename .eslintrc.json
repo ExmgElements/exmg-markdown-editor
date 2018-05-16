@@ -1,21 +1,24 @@
 {
- "extends": "exmg",
- "env": {
-   "browser": true,
-   "es6": true,
-   "node": true
- },
- "plugins": [
-   "html"
- ],
- "rules": {
-   "no-extend-native": [2, {"exceptions": ["String"]}],
-   "no-console": 0
- },
- "globals": {
-   "Polymer": true,
-   "Exmg": true,
-   "CodeMirror": true,
-   "CustomElements": false
- }
+  "extends": "exmg",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "plugins": [
+    "html"
+  ],
+  "rules": {
+    "no-extend-native": [2, {"exceptions": ["String"]}],
+    "max-len": ["error", { "code": 140, "ignoreTemplateLiterals": true }]
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "globals": {
+    "Polymer": true,
+    "Exmg": true,
+    "CodeMirror": true,
+    "CustomElements": false
+  }
 }
