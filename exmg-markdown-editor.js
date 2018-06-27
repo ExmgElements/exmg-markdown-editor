@@ -89,7 +89,7 @@ const insertBlocks = {
 * @summary Markdown editor element
 */
 
-class EditorElement extends PolymerElement {
+export class EditorElement extends PolymerElement {
   static get is() {
     return 'exmg-markdown-editor';
   }
