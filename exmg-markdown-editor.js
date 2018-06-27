@@ -120,6 +120,7 @@ class EditorElement extends PolymerElement {
       fullscreen: {
         type: Boolean,
         reflectToAttribute: true,
+        notify: true,
         value: false,
         observer: '_observeFullscreen',
       },
@@ -381,7 +382,7 @@ class EditorElement extends PolymerElement {
     <div id="toolbar" class="toolbar">
       <template is="dom-repeat" items="{{_getToolbar(toolbarButtons)}}" as="button">
         <template is="dom-if" if="[[button.name]]">
-          <a href="#" title="[[button.title]]" class\$="[[button.className]]" on-click="_handleToolbarClick"><iron-icon icon="[[button.icon]]"></iron-icon></a>
+          <a href="#" title="[[button.title]]" class$="[[button.className]]" on-click="_handleToolbarClick"><iron-icon icon="[[button.icon]]"></iron-icon></a>
         </template>
         <template is="dom-if" if="[[!button.name]]">
           <span class="seperator"></span>
