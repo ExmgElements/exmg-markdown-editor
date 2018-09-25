@@ -1,6 +1,6 @@
-const styleElement = document.createElement('dom-module');
+import {html} from '@polymer/polymer/polymer-element.js';
 
-styleElement.innerHTML = `<template>
+export const codeMirrorStyles = html`<template>
   <style>
   /* BASICS */
 
@@ -350,5 +350,3 @@ styleElement.innerHTML = `<template>
   span.CodeMirror-selectedtext { background: none; }
   </style>
 </template>`;
-
-styleElement.register('codemirror-style-element');

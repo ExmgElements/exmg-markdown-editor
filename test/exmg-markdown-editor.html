@@ -6,43 +6,51 @@
 
     <title>exmg-editor test</title>
 
-    <script src="@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="web-component-tester/browser.js"></script>
+    <script src="../node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="../node_modules/codemirror/mode/markdown/markdown.js"></script>
+    <script src="../node_modules/codemirror/addon/edit/continuelist.js"></script>
+    <script src="../node_modules/codemirror/addon/mode/overlay.js"></script>
+    <script src="../node_modules/codemirror/addon/display/fullscreen.js"></script>
+    <script src="../node_modules/codemirror/addon/display/placeholder.js"></script>
+    <script src="../node_modules/codemirror/mode/gfm/gfm.js"></script>
+    <script src="../node_modules/codemirror/mode/xml/xml.js"></script>
 
-    <link rel="import" href="../exmg-editor.html">
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
+
+    <script type="module" src="../node_modules/@polymer/marked-element/marked-element.js"></script>
+
+    <script type="module" src="../exmg-markdown-editor.js"></script>
   </head>
   <body>
 
     <test-fixture id="BasicTestFixture">
       <template>
-        <exmg-editor></exmg-editor>
+        <exmg-markdown-editor>
+          <marked-element>
+            <div slot="markdown-html"></div>
+            <script type="text/markdown">
+              # Text
+              Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt 
+              ut labore et dolore magna aliqua. 
+            </script>
+          </marked-element>
+        </exmg-markdown-editor>
       </template>
     </test-fixture>
 
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <exmg-editor prop1="new-prop1"></exmg-editor>
-      </template>
-    </test-fixture>
+    <script type="module">
+      suite('exmg-markdown-editor', () => {
 
-    <script>
-      suite('exmg-editor', () => {
-
-        test('instantiating the element with default properties works', () => {
+        test('check if default toolbar is rendered correctly', (done) => {
           const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'exmg-editor');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello exmg-editor!');
-        });
-
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
+          flush(() => {
+            const elementShadowRoot = element.shadowRoot;
+            const elements = elementShadowRoot.querySelectorAll('#toolbar a');
+            assert.equal(elements.length, 14);
+            done();
+          });
+          
         });
 
       });

@@ -2,14 +2,9 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/iron-icon/iron-icon.js';
 import './exmg-markdown-editor-icons.js';
-import './exmg-markdown-codemirror-styles.js';
+import {codeMirrorStyles} from './exmg-markdown-codemirror-styles.js';
 
 import {afterNextRender} from '@polymer/polymer/lib/utils/render-status.js';
-
-/**
-* @namespace Exmg
-*/
-window.Exmg = window.Exmg || {};
 
 const isMac = /Mac/.test(navigator.platform);
 const convertShortcut = (name) => {
@@ -235,164 +230,166 @@ export class EditorElement extends PolymerElement {
     };
   }
   static get template() {
-    return html`<style include="codemirror-style-element">
-      :host {
-        display: block;
-        border: 1px solid var(--exmg-markdown-editor-border, #ddd);
-        overflow: hidden;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        @apply --exmg-markdown-editor;
-      }
+    return html`
+      ${codeMirrorStyles}
+      <style>
+        :host {
+          display: block;
+          border: 1px solid var(--exmg-markdown-editor-border, #ddd);
+          overflow: hidden;
+          font-family: 'Roboto', 'Noto', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          @apply --exmg-markdown-editor;
+        }
 
-      #editor {
-        overflow: auto;
-      }
+        #editor {
+          overflow: auto;
+        }
 
-      ::slotted(*) {
-        display: none;
-        overflow: auto;
-      }
+        ::slotted(*) {
+          display: none;
+          overflow: auto;
+        }
 
-      :host([split-view]) ::slotted(*) {
-        display: block;
-        background: var(--exmg-markdown-editor-preview-background, white);
-        border-left: 1px solid var(--exmg-markdown-editor-border, #ddd);
-        padding: 16px;
-        @apply --exmg-markdown-editor-preview;
-      }
+        :host([split-view]) ::slotted(*) {
+          display: block;
+          background: var(--exmg-markdown-editor-preview-background, white);
+          border-left: 1px solid var(--exmg-markdown-editor-border, #ddd);
+          padding: 16px;
+          @apply --exmg-markdown-editor-preview;
+        }
 
-      .container {
-        box-sizing: border-box;
-        background: var(--exmg-markdown-editor-background-color, white);
-        @apply --layout-horizontal;
-      }
+        .container {
+          box-sizing: border-box;
+          background: var(--exmg-markdown-editor-background-color, white);
+          @apply --layout-horizontal;
+        }
 
-      /* No importants! */
-      :host([fullscreen]) .container {
-        position: fixed !important;
-        top: calc(50px + var(--exmg-markdown-editor-fullscreen-top-offset, 0px));
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 9;
-      }
+        /* No importants! */
+        :host([fullscreen]) .container {
+          position: fixed !important;
+          top: calc(50px + var(--exmg-markdown-editor-fullscreen-top-offset, 0px));
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 9;
+        }
 
-      :host([split-view]) ::slotted(*),
-      .container > * {
-        @apply --layout-flex;
-      }
+        :host([split-view]) ::slotted(*),
+        .container > * {
+          @apply --layout-flex;
+        }
 
-      :host([line-numbers]) .container #editor {
-        padding: 0;
-      }
+        :host([line-numbers]) .container #editor {
+          padding: 0;
+        }
 
-      /* No importants! */
-      .CodeMirror {
-        height: 100% !important;
-        min-height: 300px;
-        font: inherit;
-        z-index: 1;
-        padding: 16px;
-        background: var(--exmg-markdown-editor-code-background, #f4f5f7);
-        @apply --exmg-markdown-editor-code;
-      }
+        /* No importants! */
+        .CodeMirror {
+          height: 100% !important;
+          min-height: 300px;
+          font: inherit;
+          z-index: 1;
+          padding: 16px;
+          background: var(--exmg-markdown-editor-code-background, #f4f5f7);
+          @apply --exmg-markdown-editor-code;
+        }
 
-      .CodeMirror-scroll {
-        min-height: 300px
-      }
+        .CodeMirror-scroll {
+          min-height: 300px
+        }
 
-      .CodeMirror:not(.CodeMirror-focused):hover {
-        background: var(--exmg-markdown-editor-code-hover, white);
-      }
+        .CodeMirror:not(.CodeMirror-focused):hover {
+          background: var(--exmg-markdown-editor-code-hover, white);
+        }
 
-      .CodeMirror-focused {
-        box-sizing: border-box;
-        box-shadow: inset 0 0 0 2px Highlight;
-        box-shadow: inset 0 0 0 2px -webkit-focus-ring-color;
-        overflow: hidden;
-        background: white;
-        @apply --exmg-markdown-editor-code-focused;
-      } 
+        .CodeMirror-focused {
+          box-sizing: border-box;
+          box-shadow: inset 0 0 0 2px Highlight;
+          box-shadow: inset 0 0 0 2px -webkit-focus-ring-color;
+          overflow: hidden;
+          background: white;
+          @apply --exmg-markdown-editor-code-focused;
+        } 
 
-      .toolbar {
-        position: relative;
-        padding: 8px 10px;
-        border-bottom: 1px solid var(--exmg-markdown-editor-border, #ddd);
-        background: var(--exmg-markdown-editor-toolbar-background, #fafafa);
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -o-user-select: none;
-        user-select: none;
-        @apply --exmg-markdown-editor-toolbar;
-      }
+        .toolbar {
+          position: relative;
+          padding: 8px 10px;
+          border-bottom: 1px solid var(--exmg-markdown-editor-border, #ddd);
+          background: var(--exmg-markdown-editor-toolbar-background, #fafafa);
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -o-user-select: none;
+          user-select: none;
+          @apply --exmg-markdown-editor-toolbar;
+        }
 
-      :host([fullscreen]) .toolbar {
-        width: 100%;
-        box-sizing: border-box;
-        height: 50px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        padding: 10px 10px;;
-        position: fixed;
-        top: calc(0px + var(--exmg-markdown-editor-fullscreen-top-offset, 0px));
-        left: 0;
-        z-index: 1;
-      }
+        :host([fullscreen]) .toolbar {
+          width: 100%;
+          box-sizing: border-box;
+          height: 50px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          white-space: nowrap;
+          padding: 10px 10px;;
+          position: fixed;
+          top: calc(0px + var(--exmg-markdown-editor-fullscreen-top-offset, 0px));
+          left: 0;
+          z-index: 1;
+        }
 
-      .toolbar a {
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-        margin: 0;
-        border-radius: 4px;
-        color: var(--exmg-markdown-editor-toolbar-color, rgba(0, 0, 0, 0.87));
-        border: 1px solid transparent;
-        cursor: pointer;
-        @apply --exmg-markdown-editor-toolbar-button;
-      }
+        .toolbar a {
+          display: inline-block;
+          text-align: center;
+          text-decoration: none;
+          margin: 0;
+          border-radius: 4px;
+          color: var(--exmg-markdown-editor-toolbar-color, rgba(0, 0, 0, 0.87));
+          border: 1px solid transparent;
+          cursor: pointer;
+          @apply --exmg-markdown-editor-toolbar-button;
+        }
 
-      .toolbar a iron-icon {
-        margin: 4px;
-        width: 22px;
-        height: 22px;
-        @apply --exmg-markdown-editor-toolbar-button-icon;
-      }
+        .toolbar a iron-icon {
+          margin: 4px;
+          width: 22px;
+          height: 22px;
+          @apply --exmg-markdown-editor-toolbar-button-icon;
+        }
 
-      .toolbar a[disabled] {
-        color: var(--exmg-markdown-editor-toolbar-color-disabled, rgba(0, 0, 0, 0.54));
-      }
+        .toolbar a[disabled] {
+          color: var(--exmg-markdown-editor-toolbar-color-disabled, rgba(0, 0, 0, 0.54));
+        }
 
-      .toolbar a:hover {
-        background: var(--exmg-markdown-editor-toolbar-button-background-hover, #fafafa);
-        @apply --exmg-markdown-editor-toolbar-button-hover;
-      }
-      .toolbar .seperator {
-        margin: 0 8px;
-        border-left: 1px solid var(--exmg-markdown-editor-toolbar-seperator-color, #ddd);
-      }
+        .toolbar a:hover {
+          background: var(--exmg-markdown-editor-toolbar-button-background-hover, #fafafa);
+          @apply --exmg-markdown-editor-toolbar-button-hover;
+        }
+        .toolbar .seperator {
+          margin: 0 8px;
+          border-left: 1px solid var(--exmg-markdown-editor-toolbar-seperator-color, #ddd);
+        }
 
-    </style>
+      </style>
 
-    <div id="toolbar" class="toolbar">
-      <template is="dom-repeat" items="{{_getToolbar(toolbarButtons)}}" as="button">
-        <template is="dom-if" if="[[button.name]]">
-          <a href="#" title="[[button.title]]" class$="[[button.className]]" on-click="_handleToolbarClick"><iron-icon icon="[[button.icon]]"></iron-icon></a>
+      <div id="toolbar" class="toolbar">
+        <template is="dom-repeat" items="{{_getToolbar(toolbarButtons)}}" as="button">
+          <template is="dom-if" if="[[button.name]]">
+            <a href="#" title="[[button.title]]" class$="[[button.className]]" on-click="_handleToolbarClick"><iron-icon icon="[[button.icon]]"></iron-icon></a>
+          </template>
+          <template is="dom-if" if="[[!button.name]]">
+            <span class="seperator"></span>
+          </template>
         </template>
-        <template is="dom-if" if="[[!button.name]]">
-          <span class="seperator"></span>
-        </template>
-      </template>
-    </div>
-    <div class="container">
-      <div id="editor"></div>
-      <slot></slot>
-    </div>
+      </div>
+      <div class="container">
+        <div id="editor"></div>
+        <slot></slot>
+      </div>
     `;
   }
   get markdownElement() {
@@ -427,6 +424,9 @@ export class EditorElement extends PolymerElement {
    */
   _getToolbar(toolbarConfig) {
     const toolbar = [];
+    if (!toolbarConfig) {
+      return toolbar;
+    }
     toolbarConfig.forEach((c) => {
       if (c === '|') {
         toolbar.push({});
@@ -781,5 +781,4 @@ export class EditorElement extends PolymerElement {
 }
 
 window.customElements.define(EditorElement.is, EditorElement);
-Exmg.EditorElement = EditorElement;
 
