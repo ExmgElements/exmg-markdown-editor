@@ -1,6 +1,6 @@
 import {html} from '@polymer/polymer/polymer-element.js';
 
-export const codeMirrorStyles = html`<template>
+export const codeMirrorStyles = html`
   <style>
   /* BASICS */
 
@@ -348,5 +348,4 @@ export const codeMirrorStyles = html`<template>
   
   /* Help users use markselection to safely style text background */
   span.CodeMirror-selectedtext { background: none; }
-  </style>
-</template>`;
+  </style>`;
