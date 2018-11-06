@@ -24,11 +24,11 @@
     "@polymer/iron-flex-layout": "^3.0.1",
     "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
-    "@polymer/polymer": "^3.0.5",
+    "@polymer/polymer": "^3.1.0",
     "codemirror": "5.32.0"
   },
   "devDependencies": {
-    "@polymer/iron-component-page": "^3.0.0-pre.21",
+    "@polymer/iron-component-page": "^4.0.1",
     "@polymer/iron-demo-helpers": "^3.0.2",
     "@polymer/marked-element": "^3.0.1",
     "@polymer/paper-styles": "^3.0.1",
@@ -36,7 +36,7 @@
     "eslint-config-exmg": "latest",
     "eslint-plugin-html": "^3.0.0",
     "github-markdown-css": "^2.10.0",
-    "wct-browser-legacy": "^1.0.1"
+    "wct-browser-legacy": "^1.0.2"
   },
   "resolutions": {
     "@webcomponents/webcomponentsjs": "2.0.0",
