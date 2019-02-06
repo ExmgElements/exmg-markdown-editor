@@ -32,11 +32,11 @@
     "@polymer/iron-iconset-svg": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "codemirror": "5.32.0",
-    "lit-element": "^2.0.1"
+    "lit-element": "^2.0.1",
+    "@polymer/marked-element": "^3.0.1"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.2",
-    "@polymer/marked-element": "^3.0.1",
     "@polymer/paper-styles": "^3.0.1",
     "@polymer/test-fixture": "^4.0.2",
     "@types/chai": "^4.1.7",

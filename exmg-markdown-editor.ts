@@ -754,8 +754,6 @@ export class EditorElement extends LitElement {
     await this.updateComplete;
     this.ready();
     this.isElementInitialized = true;
-    // @ts-ignore
-    window.el = this;
   }
 
   protected updated(changedProperties: ChangedProps): void {
