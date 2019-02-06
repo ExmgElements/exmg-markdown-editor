@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>exmg-markdown-editor demo</title>
+    <title>exmg-editor test</title>
 
     <script src="../node_modules/codemirror/lib/codemirror.js"></script>
     <script src="../node_modules/codemirror/mode/markdown/markdown.js"></script>
@@ -15,48 +15,56 @@
     <script src="../node_modules/codemirror/mode/gfm/gfm.js"></script>
     <script src="../node_modules/codemirror/mode/xml/xml.js"></script>
 
-
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../node_modules/@webcomponents/shadycss/apply-shim.min.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
 
-    <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
-    <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
-
-    <link rel="stylesheet" href="../node_modules/github-markdown-css/github-markdown.css">
+    <!--<script type="module" src="../node_modules/@polymer/marked-element/marked-element.js"></script>-->
     <script type="module" src="../exmg-markdown-editor.js"></script>
-
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-         html {
-          --exmg-markdown-editor-border: #dfe1e6;
-          --exmg-markdown-editor-toolbar-background: #f4f5f7;
-          --exmg-markdown-editor-toolbar-button-background-hover: #ebecf0;
-          --exmg-markdown-editor-toolbar-color: #505f79;
-          --exmg-markdown-editor-toolbar:{
-            padding: 6px 10px;
-          };
-          --exmg-markdown-editor-toolbar-button-icon: {
-            width: 18px;
-            height: 18px;
-          }
-        }
-        .centered {
-          max-width: 1000px;
-        }
-      </style>
-    </custom-style>
   </head>
   <body>
-    <div class="vertical-section-container centered">
-      <demo-snippet>
-        <template>
-          <exmg-markdown-editor split-view="">
-            <marked-element>
-              <div slot="markdown-html" class="markdown-body"></div>
-              <script type="text/markdown">
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <exmg-markdown-editor>
+         <marked-element>
+            <div slot="markdown-html" class="markdown-body"></div>
+            <script type="text/markdown">
+              # Text
+              Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt
+              ut labore et dolore magna aliqua.
+            </script>
+          </marked-element>
+        </exmg-markdown-editor>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ExmgToolBarTestFixture">
+      <template>
+        <exmg-markdown-editor auto-focus split-view toolbar-buttons='["undo", "redo"]'>
+          <marked-element>
+            <div slot="markdown-html" class="markdown-body"></div>
+            <script type="text/markdown">
+                # Text
+                Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt
+                ut labore et dolore magna aliqua.
+              </script>
+          </marked-element>
+        </exmg-markdown-editor>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ExmgStylingTextFixture">
+      <template>
+        <exmg-markdown-editor split-view>
+          <marked-element>
+            <div slot="markdown-html" class="markdown-body"></div>
+            <script type="text/markdown">
                 # Headers
 
-                # H1`
+                # H1
                 ## H2
                 ### H3
                 #### H4
@@ -99,10 +107,10 @@
                 code
                 ```
               </script>
-            </marked-element>
-          </exmg-markdown-editor>
-        </template>
-      </demo-snippet>
-    </div>
+          </marked-element>
+        </exmg-markdown-editor>
+      </template>
+    </test-fixture>
+    <script type="module" src="./exmg-markdown-editor.spec.js"></script>
   </body>
 </html>

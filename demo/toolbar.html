@@ -15,15 +15,15 @@
     <script src="../node_modules/codemirror/mode/gfm/gfm.js"></script>
     <script src="../node_modules/codemirror/mode/xml/xml.js"></script>
 
+
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@webcomponents/shadycss/apply-shim.min.js"></script>
 
     <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-pages-shared-styles.js"></script>
     <script type="module" src="../node_modules/@polymer/iron-demo-helpers/demo-snippet.js"></script>
-    <script type="module" src="../node_modules/@polymer/marked-element/marked-element.js"></script>
-    <script type="module" src="../node_modules/@polymer/polymer/lib/elements/dom-bind.js"></script>
-    
-    <script type="module" src="../exmg-markdown-editor.js"></script>
+
     <link rel="stylesheet" href="../node_modules/github-markdown-css/github-markdown.css">
+    <script type="module" src="../exmg-markdown-editor.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -37,20 +37,16 @@
    <div class="vertical-section-container centered">
       <demo-snippet>
         <template>
-          <dom-bind>
-            <template>
-              <exmg-markdown-editor auto-focus="" split-view="" toolbar-buttons='["undo", "redo"]'>
-                <marked-element>
-                  <div slot="markdown-html" class="markdown-body"></div>
-                  <script type="text/markdown">
-                    # Text
-                    Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt 
-                    ut labore et dolore magna aliqua. 
-                  </script>
-                </marked-element>
-              </exmg-markdown-editor>
-            </template>
-          </dom-bind>
+          <exmg-markdown-editor auto-focus split-view toolbar-buttons='["undo", "redo"]'>
+            <marked-element>
+              <div slot="markdown-html" class="markdown-body"></div>
+              <script type="text/markdown">
+                # Text
+                Lorem **ipsum** dolor sit amet, ~~consectetur adipiscing~~ elit, sed do *eiusmod* tempor incididunt
+                ut labore et dolore magna aliqua.
+              </script>
+            </marked-element>
+          </exmg-markdown-editor>
         </template>
       </demo-snippet>
     </div>
