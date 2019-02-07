@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Typescript definitions located in *.d.ts files
 * Rewrite component to LitElement
+* Package `@polymer/marked-element` has been added to dependencies
 ### Changed
 * `[Breaking]` Two way data binding has been removed. To obtain `fullscreen` value handler should be added:
   * event `exmg-markdown-editor-fullscreen` where event.detail is boolean with current fullscreen state

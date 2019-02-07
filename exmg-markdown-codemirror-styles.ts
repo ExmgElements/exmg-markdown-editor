@@ -314,4 +314,4 @@ export const codeMirrorStylesText = codeMirrorStylesDefinition
   .replace('<style>', '')
   .replace('</style>', '');
 
-export const codeMirrorStyles = html`${codeMirrorStylesText}`;
+export const codeMirrorStyles = html`${codeMirrorStylesDefinition}`;
