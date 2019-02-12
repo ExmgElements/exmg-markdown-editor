@@ -271,7 +271,7 @@ export class EditorElement extends LitElement {
   /**
    * When ready check if markdown property is set or otherwise look for script tag
    */
-  private ready() {
+  private ready(): void {
     this.setupEditor();
 
     const markedElement = this.markdownElement;
@@ -465,11 +465,11 @@ export class EditorElement extends LitElement {
     return codeMirrorEditor;
   }
 
-  private replaceRangeLine(text: string, lineNumber: number) {
+  private replaceRangeLine(text: string, lineNumber: number): void {
     this.codeMirrorEditor!.getDoc().replaceRange(text, {line: lineNumber, ch: 0}, {line: lineNumber, ch: 99999999999999});
   }
 
-  private insertAtCursor(text: string, selectionOffset?: number, selectionLength?: number) {
+  private insertAtCursor(text: string, selectionOffset?: number, selectionLength?: number): void {
     this.codeMirrorEditor!.getDoc().replaceSelection(text, 'start');
 
     const cursorStart = this.codeMirrorEditor!.getDoc().getCursor();
@@ -672,7 +672,7 @@ export class EditorElement extends LitElement {
     this.processLine('quote', '>');
   }
 
-  private toggleUnorderedList(event? :Event): void {
+  private toggleUnorderedList(event?: Event): void {
     if (event) {
       event.preventDefault();
     }
@@ -715,7 +715,7 @@ export class EditorElement extends LitElement {
     }
   }
 
-  private undo(event? :Event): void {
+  private undo(event?: Event): void {
     if (event) {
       event.preventDefault();
     }
