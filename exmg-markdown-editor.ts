@@ -157,8 +157,14 @@ export class EditorElement extends LitElement {
   @property({type: Boolean})
   public required: boolean = false;
 
+  @property({type: Boolean, reflect: true, attribute: 'invalid'})
+  // @ts-ignore
+  private invalid = false;
+
   public validate(): boolean {
-    return !this.required || !!this.markdown;
+    this.invalid = this.required && !this.markdown;
+
+    return !this.invalid;
   }
 
   @property({type: Array})
@@ -788,14 +794,17 @@ export class EditorElement extends LitElement {
         ${codeMirrorStylesText}
         :host {
           display: block;
-          border: 1px solid var(--exmg-markdown-editor-border, #ddd);
           overflow: hidden;
+          border: 1px solid var(--exmg-markdown-editor-border, #ddd);
           font-family: 'Roboto', 'Noto', sans-serif;
           -webkit-font-smoothing: antialiased;
           font-size: 14px;
           font-weight: 400;
           line-height: 20px;
           @apply --exmg-markdown-editor;
+        }
+        :host([invalid]) {
+          border: 1px solid red;
         }
         #editor {
           overflow: auto;
@@ -804,6 +813,7 @@ export class EditorElement extends LitElement {
           display: none;
           overflow: auto;
         }
+
         :host([split-view]) ::slotted(*) {
           display: block;
           background: var(--exmg-markdown-editor-preview-background, white);

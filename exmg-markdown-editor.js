@@ -186,6 +186,7 @@ let EditorElement = class EditorElement extends LitElement {
             'ordered-list', '|', 'fullscreen', 'split-view',
         ];
         this.required = false;
+        this.invalid = false;
         this.toolbarButtonsConfig = [
             {
                 name: 'undo',
@@ -289,7 +290,8 @@ let EditorElement = class EditorElement extends LitElement {
         this.isElementInitialized = false;
     }
     validate() {
-        return !this.required || !!this.markdown;
+        this.invalid = this.required && !this.markdown;
+        return !this.invalid;
     }
     get markdownElement() {
         return this.querySelector('marked-element');
@@ -725,14 +727,17 @@ let EditorElement = class EditorElement extends LitElement {
         ${codeMirrorStylesText}
         :host {
           display: block;
-          border: 1px solid var(--exmg-markdown-editor-border, #ddd);
           overflow: hidden;
+          border: 1px solid var(--exmg-markdown-editor-border, #ddd);
           font-family: 'Roboto', 'Noto', sans-serif;
           -webkit-font-smoothing: antialiased;
           font-size: 14px;
           font-weight: 400;
           line-height: 20px;
           @apply --exmg-markdown-editor;
+        }
+        :host([invalid]) {
+          border: 1px solid red;
         }
         #editor {
           overflow: auto;
@@ -741,6 +746,7 @@ let EditorElement = class EditorElement extends LitElement {
           display: none;
           overflow: auto;
         }
+
         :host([split-view]) ::slotted(*) {
           display: block;
           background: var(--exmg-markdown-editor-preview-background, white);
@@ -898,6 +904,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], EditorElement.prototype, "required", void 0);
+__decorate([
+    property({ type: Boolean, reflect: true, attribute: 'invalid' })
+], EditorElement.prototype, "invalid", void 0);
 __decorate([
     property({ type: Array })
 ], EditorElement.prototype, "toolbarButtonsConfig", void 0);

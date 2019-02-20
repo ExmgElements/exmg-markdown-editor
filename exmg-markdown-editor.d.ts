@@ -92,6 +92,7 @@ export declare class EditorElement extends LitElement {
     toolbarButtons: ToolBarOption[];
     name?: string;
     required: boolean;
+    private invalid;
     validate(): boolean;
     private toolbarButtonsConfig;
     shortcuts: Record<string, string>;
