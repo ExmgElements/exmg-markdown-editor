@@ -1,9 +1,11 @@
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-iconset-svg/iron-iconset-svg.js';
 
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+const documentContainer = document.createElement('div');
+documentContainer.setAttribute('style', 'display: none;');
 
-const template = html`<iron-iconset-svg name="exmg-markdown-editor-icons" size="24">
+// tslint:disable:max-line-length
+documentContainer.innerHTML = `<iron-iconset-svg name="exmg-markdown-editor-icons" size="24">
   <svg>
     <defs>
       <g id="undo"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"></path></g>
@@ -26,5 +28,6 @@ const template = html`<iron-iconset-svg name="exmg-markdown-editor-icons" size="
     </defs>
   </svg>
 </iron-iconset-svg>`;
+// tslint:enable:max-line-length
 
-document.head.appendChild(template.content);
+document.head!.appendChild(documentContainer);
