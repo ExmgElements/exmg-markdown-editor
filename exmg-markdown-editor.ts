@@ -154,6 +154,19 @@ export class EditorElement extends LitElement {
   @property({type: String})
   public name?: string;
 
+  @property({type: Boolean, attribute: 'required'})
+  public required: boolean = false;
+
+  @property({type: Boolean, reflect: true, attribute: 'invalid'})
+  // @ts-ignore
+  private invalid = false;
+
+  public validate(): boolean {
+    this.invalid = this.required && !this.markdown;
+
+    return !this.invalid;
+  }
+
   @property({type: Array})
   private toolbarButtonsConfig: ToolBarConfigItem[] = [
     {
@@ -789,6 +802,9 @@ export class EditorElement extends LitElement {
           font-weight: 400;
           line-height: 20px;
           @apply --exmg-markdown-editor;
+        }
+        :host([invalid]) {
+          border: 1px solid red;
         }
         #editor {
           overflow: auto;
