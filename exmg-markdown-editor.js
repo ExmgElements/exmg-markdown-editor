@@ -902,7 +902,7 @@ __decorate([
     property({ type: String })
 ], EditorElement.prototype, "name", void 0);
 __decorate([
-    property({ type: Boolean })
+    property({ type: Boolean, attribute: 'required' })
 ], EditorElement.prototype, "required", void 0);
 __decorate([
     property({ type: Boolean, reflect: true, attribute: 'invalid' })

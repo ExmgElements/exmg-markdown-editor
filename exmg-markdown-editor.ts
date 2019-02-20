@@ -154,7 +154,7 @@ export class EditorElement extends LitElement {
   @property({type: String})
   public name?: string;
 
-  @property({type: Boolean})
+  @property({type: Boolean, attribute: 'required'})
   public required: boolean = false;
 
   @property({type: Boolean, reflect: true, attribute: 'invalid'})
