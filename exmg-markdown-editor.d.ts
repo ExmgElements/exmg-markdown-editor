@@ -91,6 +91,8 @@ export declare class EditorElement extends LitElement {
     fullscreen: boolean;
     toolbarButtons: ToolBarOption[];
     name?: string;
+    required: boolean;
+    validate(): boolean;
     private toolbarButtonsConfig;
     shortcuts: Record<string, string>;
     readonly markdownElement: MarkdownElement | null;

@@ -154,6 +154,13 @@ export class EditorElement extends LitElement {
   @property({type: String})
   public name?: string;
 
+  @property({type: Boolean})
+  public required: boolean = false;
+
+  public validate(): boolean {
+    return !this.required || !!this.markdown;
+  }
+
   @property({type: Array})
   private toolbarButtonsConfig: ToolBarConfigItem[] = [
     {

@@ -185,6 +185,7 @@ let EditorElement = class EditorElement extends LitElement {
             '|', 'quote', 'hr', 'table', 'code', '|', 'unordered-list',
             'ordered-list', '|', 'fullscreen', 'split-view',
         ];
+        this.required = false;
         this.toolbarButtonsConfig = [
             {
                 name: 'undo',
@@ -286,6 +287,9 @@ let EditorElement = class EditorElement extends LitElement {
         this.normalizedToolBarConfig = new Map();
         this.dispatchMarkdownUpdatedDebounce = debounce(300);
         this.isElementInitialized = false;
+    }
+    validate() {
+        return !this.required || !!this.markdown;
     }
     get markdownElement() {
         return this.querySelector('marked-element');
@@ -891,6 +895,9 @@ __decorate([
 __decorate([
     property({ type: String })
 ], EditorElement.prototype, "name", void 0);
+__decorate([
+    property({ type: Boolean })
+], EditorElement.prototype, "required", void 0);
 __decorate([
     property({ type: Array })
 ], EditorElement.prototype, "toolbarButtonsConfig", void 0);
