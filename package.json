@@ -22,10 +22,6 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/ExmgElements/exmg-markdown-editor",
-  "files": [
-    "exmg-*.js",
-    "exmg-*.d.ts"
-  ],
   "dependencies": {
     "@polymer/iron-flex-layout": "^3.0.1",
     "@polymer/iron-icon": "^3.0.1",

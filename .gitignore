@@ -1,7 +1,4 @@
 node_modules/
 *.sublime*
 .idea/
-*.d.ts
-*.js
-!gulpfile.js
 *.log

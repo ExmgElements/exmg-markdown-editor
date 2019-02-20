@@ -151,6 +151,9 @@ export class EditorElement extends LitElement {
     'ordered-list', '|', 'fullscreen', 'split-view',
   ];
 
+  @property({type: String})
+  public name?: string;
+
   @property({type: Array})
   private toolbarButtonsConfig: ToolBarConfigItem[] = [
     {
@@ -267,6 +270,10 @@ export class EditorElement extends LitElement {
   private dispatchMarkdownUpdatedDebounce: (cb?: Function) => void = debounce(300);
 
   private isElementInitialized: boolean = false;
+
+  get value() {
+    return this.markdown;
+  }
 
   /**
    * When ready check if markdown property is set or otherwise look for script tag
