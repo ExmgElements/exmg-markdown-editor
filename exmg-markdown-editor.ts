@@ -767,6 +767,7 @@ export class EditorElement extends LitElement {
     switch (e.code || e.keyCode) {
       case ENTER_KEY_CODE:
       case 'Enter':
+      case 'NumpadEnter':
         e.stopPropagation();
         break;
     }
