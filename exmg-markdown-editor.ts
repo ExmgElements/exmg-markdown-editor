@@ -54,6 +54,8 @@ const debounce  = (time: number) => {
   };
 };
 
+const ENTER_KEY_CODE = 13;
+
 /**
 * Markdown WYSIWYG editor element.
 * This editor element is a wrapper element for the markdown-element which will enable editing
@@ -761,6 +763,15 @@ export class EditorElement extends LitElement {
     this.codeMirrorEditor!.focus();
   }
 
+  private onEnterPressed(e: KeyboardEvent) {
+    switch (e.code || e.keyCode) {
+      case ENTER_KEY_CODE:
+      case 'Enter':
+        e.stopPropagation();
+        break;
+    }
+  }
+
   /*****  LIT ELEMENT HOOKS ******/
   connectedCallback() {
     super.connectedCallback();
@@ -770,11 +781,15 @@ export class EditorElement extends LitElement {
     if (markedElement) {
       this.markdown = markedElement.getAttribute('markdown') || undefined;
     }
+
+    this.addEventListener('keydown', this.onEnterPressed);
   }
 
   disconnectedCallback(): void {
-    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.onEnterPressed);
     this.dispatchMarkdownUpdatedDebounce();
+
+    super.disconnectedCallback();
   }
 
   protected update(changedProperties: ChangedProps): void {
