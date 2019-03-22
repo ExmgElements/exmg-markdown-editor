@@ -288,6 +288,10 @@ export class EditorElement extends LitElement {
     return this.markdown;
   }
 
+  set value(value) {
+    this.markdown = value;
+  }
+
   /**
    * When ready check if markdown property is set or otherwise look for script tag
    */
@@ -373,12 +377,16 @@ export class EditorElement extends LitElement {
   }
 
   private observeMarkdownChanged(): void {
-    if (this.codeMirrorEditor!.getValue() !== this.markdown) {
-      this.codeMirrorEditor!.setValue(this.markdown!);
+    if (this.codeMirrorEditor) {
+      if (this.codeMirrorEditor.getValue() !== this.markdown) {
+        this.codeMirrorEditor.setValue(this.markdown!);
+      }
     }
+
     if (this.markdownElement) {
       this.markdownElement!.markdown = this.markdown;
     }
+
     this.updateDocHistory();
   }
 
@@ -754,6 +762,15 @@ export class EditorElement extends LitElement {
   }
 
   /*****  LIT ELEMENT HOOKS ******/
+  connectedCallback() {
+    super.connectedCallback();
+
+    const markedElement = this.markdownElement;
+
+    if (markedElement) {
+      this.markdown = markedElement.getAttribute('markdown') || undefined;
+    }
+  }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
