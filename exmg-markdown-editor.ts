@@ -763,12 +763,14 @@ export class EditorElement extends LitElement {
     this.codeMirrorEditor!.focus();
   }
 
-  private onEnterPressed(e: KeyboardEvent) {
+  private onKeyPressed(e: KeyboardEvent) {
     switch (e.code || e.keyCode) {
       case ENTER_KEY_CODE:
       case 'Enter':
       case 'NumpadEnter':
-        e.stopPropagation();
+        if (!e.ctrlKey) {
+          e.stopPropagation();
+        }
         break;
     }
   }
@@ -783,11 +785,11 @@ export class EditorElement extends LitElement {
       this.markdown = markedElement.getAttribute('markdown') || undefined;
     }
 
-    this.addEventListener('keydown', this.onEnterPressed);
+    this.addEventListener('keydown', this.onKeyPressed);
   }
 
   disconnectedCallback(): void {
-    this.removeEventListener('keydown', this.onEnterPressed);
+    this.removeEventListener('keydown', this.onKeyPressed);
     this.dispatchMarkdownUpdatedDebounce();
 
     super.disconnectedCallback();
