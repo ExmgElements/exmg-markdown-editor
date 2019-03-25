@@ -1,7 +1,7 @@
 {
   "name": "@exmg/exmg-markdown-editor",
   "flat": true,
-  "version": "4.4.0",
+  "version": "4.5.0",
   "description": "Element that wrap-around marked-element to make the markdown editable",
   "main": "exmg-markdown-editor.js",
   "contributors": [
